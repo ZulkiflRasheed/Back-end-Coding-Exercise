@@ -1,0 +1,35 @@
+Get http://localhost:3000/
+
+###
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "email": "Zulkifl@gmail.com",
+    "password": "yoloyolo"
+}
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "Zulkifl@gmail.com",
+    "password": "yoloyolo"
+}
+
+###
+GET http://localhost:3000/user
+Authorization: Bearer 
+
+###
+POST http://localhost:3000/create-task
+Authorization: Bearer 
+Content-Type: application/json
+{
+    "name": "task1"
+}
+
+###
+GET http://localhost:3000/user
+Authorization: Bearer 
