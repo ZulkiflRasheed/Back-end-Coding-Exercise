@@ -1,9 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const passport = require('passport')
 
 
 app.use(express.json())
@@ -15,12 +13,7 @@ app.get('/', (req,res) => {
     res.send("Welcome")
 });
 
-app.get('/user',authenticateToken, (req,res) => {
-    const user = users.find(user => user.email === req.user.email)
-    res.json({id:user.id, email:user.email })
-});
-
-app.post('/register', async (req,res) =>{
+app.post('/register', (req,res) => {
     try {
         //const hashPass = bcrypt.hash(req.body.password,10)
         const user = {
@@ -34,11 +27,14 @@ app.post('/register', async (req,res) =>{
     }  
 });
 
-app.post('/login', async(req,res) => {
+app.post('/login', (req,res) => {
     const useremail = req.body.email
     const password = req.body.password
     if(users == null){
-        return
+        return res.json({
+            success: false,
+            message: 'User does not exists'
+          })
     }
     const user = users.find(user => user.email === useremail)
     if(user.password.localeCompare(password) === 0){
@@ -46,9 +42,16 @@ app.post('/login', async(req,res) => {
         res.json({accessToken: accessToken})
     }
     else{
-        return
-    }
-    
+        return res.json({
+            success: false,
+            message: 'Incorrect Password'
+          })
+    }    
+});
+
+app.get('/user',authenticateToken, (req,res) => {
+    const user = users.find(user => user.email === req.user.email)
+    res.json({id:user.id, email:user.email })
 });
 
 app.post('/create-task', authenticateToken, (req,res) => {
@@ -64,7 +67,10 @@ app.post('/create-task', authenticateToken, (req,res) => {
 
 app.get('/list-tasks', authenticateToken, (req,res) => {
     const user = users.find(user => user.email === req.user.email)
-    if(task = null) return 
+    if(task = null) return res.json({
+        success: false,
+        message: 'No task exists'
+      })
     else{
         res.json(tasks.filter(task => task.userid === user.id))
     }    
