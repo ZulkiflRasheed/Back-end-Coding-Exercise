@@ -5,8 +5,8 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "email": "Zulkifl@gmail.com",
-    "password": "yoloyolo"
+    "email": "email1@gmail.com",
+    "password": "pass1"
 }
 
 ###
@@ -14,8 +14,8 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "email": "Zulkifl@gmail.com",
-    "password": "yoloyolo"
+    "email": "email1@gmail.com",
+    "password": "pass1"
 }
 
 ###
@@ -26,6 +26,7 @@ Authorization: Bearer
 POST http://localhost:3000/create-task
 Authorization: Bearer 
 Content-Type: application/json
+
 {
     "name": "task1"
 }
